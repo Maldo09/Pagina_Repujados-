@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Repujados Bahamón | Indumentaria y accesorios</title>
+<meta name="description" content="Catálogo web de Repujados Bahamón. Tapones, accesorios y piezas metálicas.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--blue:#164f91;--blue2:#0c2f5b;--gold:#d8b36a;--ink:#101820;--muted:#667085;--light:#f5f7fa;--white:#fff}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:"DM Sans",sans-serif;color:var(--ink);background:#fff}
+a{text-decoration:none;color:inherit}.container{width:min(1160px,92%);margin:auto}
+header{position:fixed;top:0;left:0;right:0;z-index:20;background:rgba(8,30,58,.92);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,.1)}
+.nav{height:76px;display:flex;align-items:center;justify-content:space-between;color:white}.brand{display:flex;align-items:center;gap:12px;font-weight:700;letter-spacing:.3px}.brand img{width:45px;height:45px;object-fit:cover;border-radius:50%;border:1px solid var(--gold)}.brand span{font-family:"Playfair Display",serif;font-size:20px}.navlinks{display:flex;gap:28px;font-size:14px}.navlinks a{opacity:.88}.navlinks a:hover{opacity:1;color:var(--gold)}
+.hero{min-height:760px;display:flex;align-items:center;color:white;position:relative;overflow:hidden;background:linear-gradient(90deg,rgba(6,27,53,.95),rgba(10,54,101,.72)),url("assets/hero.jpg") center/cover}
+.hero:after{content:"";position:absolute;inset:auto -10% -180px;height:360px;background:#fff;border-radius:50% 50% 0 0/35% 35% 0 0}
+.hero-content{padding-top:76px;position:relative;z-index:2;max-width:760px}.eyebrow{text-transform:uppercase;letter-spacing:3px;font-size:12px;color:#f2dca7;margin-bottom:18px}.hero h1{font-family:"Playfair Display",serif;font-size:clamp(48px,7vw,82px);line-height:.98;margin:0 0 22px}.hero p{font-size:19px;line-height:1.7;max-width:650px;color:#e9eef6}.actions{display:flex;gap:12px;margin-top:30px;flex-wrap:wrap}.btn{display:inline-flex;align-items:center;justify-content:center;padding:14px 21px;border-radius:999px;font-weight:700;font-size:14px}.btn-primary{background:var(--gold);color:#172333}.btn-secondary{border:1px solid rgba(255,255,255,.35);color:#fff}
+section{padding:92px 0}.section-head{text-align:center;max-width:700px;margin:0 auto 46px}.kicker{font-size:12px;text-transform:uppercase;letter-spacing:2.5px;color:var(--blue);font-weight:700}.section-head h2{font-family:"Playfair Display",serif;font-size:44px;margin:10px 0 12px}.section-head p{color:var(--muted);line-height:1.7}
+.features{background:var(--light)}.feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.feature{background:white;border:1px solid #e8edf3;border-radius:20px;padding:28px}.icon{width:44px;height:44px;border-radius:14px;background:#eaf1fb;color:var(--blue);display:grid;place-items:center;font-size:20px;margin-bottom:18px}.feature h3{margin:0 0 8px;font-size:18px}.feature p{margin:0;color:var(--muted);line-height:1.6;font-size:14px}
+.catalog{background:#fff}.filters{display:flex;gap:9px;justify-content:center;flex-wrap:wrap;margin-bottom:34px}.filter{border:1px solid #dbe3ec;background:white;padding:10px 15px;border-radius:999px;cursor:pointer;font:inherit;font-size:13px}.filter.active,.filter:hover{background:var(--blue);border-color:var(--blue);color:white}
+.products{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}.card{border:1px solid #e6ebf1;border-radius:22px;overflow:hidden;background:#fff;transition:.25s;display:flex;flex-direction:column}.card:hover{transform:translateY(-5px);box-shadow:0 18px 40px rgba(12,47,91,.1)}.photo{height:240px;background:#eef3f8;display:grid;place-items:center;padding:20px}.photo img{width:100%;height:100%;object-fit:contain;border-radius:12px}.cardbody{padding:20px}.tag{font-size:11px;color:var(--blue);font-weight:700;text-transform:uppercase;letter-spacing:1px}.card h3{font-family:"Playfair Display",serif;font-size:23px;margin:7px 0}.card p{font-size:13px;color:var(--muted);line-height:1.55;min-height:40px}.card-actions{margin-top:17px;display:flex;justify-content:space-between;align-items:center}.link{font-weight:700;color:var(--blue);font-size:13px}
+.about{background:var(--blue2);color:#fff}.about-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:60px;align-items:center}.about h2{font-family:"Playfair Display",serif;font-size:48px;margin:10px 0 20px}.about p{color:#dce7f4;line-height:1.8}.about-box{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);padding:28px;border-radius:24px}.about-box img{width:100%;height:330px;object-fit:cover;border-radius:16px}
+.contact{background:#f7f8fa}.contact-box{background:white;border:1px solid #e5eaf0;border-radius:28px;padding:45px;display:flex;justify-content:space-between;align-items:center;gap:30px}.contact h2{font-family:"Playfair Display",serif;font-size:40px;margin:0 0 10px}.contact p{color:var(--muted);margin:0}.whatsapp{background:#1fae5b;color:white;padding:15px 22px;border-radius:999px;font-weight:700;white-space:nowrap}
+footer{background:#071a31;color:#aebdd0;padding:28px 0}.foot{display:flex;justify-content:space-between;gap:20px;align-items:center;font-size:13px}.foot strong{color:#fff}
+.reveal{opacity:0;transform:translateY(16px);transition:.7s}.reveal.show{opacity:1;transform:none}
+@media(max-width:800px){.navlinks{display:none}.hero{min-height:690px}.feature-grid,.products,.about-grid{grid-template-columns:1fr}.about h2{font-size:40px}.contact-box{flex-direction:column;align-items:flex-start;padding:30px}.photo{height:220px}.foot{flex-direction:column;align-items:flex-start}}
+</style>
+</head>
+<body>
+<header><div class="container nav">
+<a class="brand" href="#inicio"><img src="assets/logo.png" alt="Repujados Bahamón"><span>Repujados Bahamón</span></a>
+<nav class="navlinks"><a href="#inicio">Inicio</a><a href="#catalogo">Catálogo</a><a href="#empresa">Nosotros</a><a href="#contacto">Contacto</a></nav>
+<a class="btn btn-primary" href="https://wa.me/573148594677" target="_blank">WhatsApp</a>
+</div></header>
+
+<main>
+<section class="hero" id="inicio"><div class="container hero-content reveal">
+<div class="eyebrow">Indumentaria y accesorios</div>
+<h1>Metal que toma forma.</h1>
+<p>Soluciones en piezas metálicas y accesorios para quienes buscan acabados funcionales, resistentes y con una presentación profesional.</p>
+<div class="actions"><a class="btn btn-primary" href="#catalogo">Ver catálogo</a><a class="btn btn-secondary" href="https://wa.me/573148594677?text=Hola%20Repujados%20Baham%C3%B3n%2C%20quiero%20cotizar%20un%20producto." target="_blank">Solicitar cotización</a></div>
+</div></section>
+
+<section class="features"><div class="container"><div class="section-head reveal"><div class="kicker">Propuesta</div><h2>Una vitrina digital para el negocio</h2><p>El prototipo organiza el portafolio en una experiencia sencilla: descubrir, revisar productos y contactar directamente.</p></div>
+<div class="feature-grid">
+<div class="feature reveal"><div class="icon">◈</div><h3>Catálogo organizado</h3><p>Productos agrupados por tipo y material para facilitar la consulta del cliente.</p></div>
+<div class="feature reveal"><div class="icon">✓</div><h3>Contacto directo</h3><p>Botones de WhatsApp visibles para pasar de la consulta a la cotización.</p></div>
+<div class="feature reveal"><div class="icon">◆</div><h3>Imagen profesional</h3><p>Una estética sobria en azul, blanco y dorado inspirada en el portafolio actual.</p></div>
+</div></div></section>
+
+<section class="catalog" id="catalogo"><div class="container">
+<div class="section-head reveal"><div class="kicker">Productos</div><h2>Catálogo destacado</h2><p>Una selección de las referencias presentadas en el portafolio de Repujados Bahamón.</p></div>
+<div class="filters"><button class="filter active" data-filter="all">Todos</button><button class="filter" data-filter="galvanizado">Galvanizado</button><button class="filter" data-filter="aluminio">Aluminio</button><button class="filter" data-filter="especial">Accesorios</button></div>
+<div class="products">
+<article class="card reveal" data-category="galvanizado">
+<div class="photo"><img src="assets/galv_4.jpg" alt="Tapón de 4""></div>
+<div class="cardbody"><div class="tag">Lámina galvanizada</div><h3>Tapón de 4"</h3><p>Referencia disponible en el catálogo de Repujados Bahamón.</p>
+<div class="card-actions"><a class="link" href="https://wa.me/573148594677?text=Hola%20Repujados%20Baham%C3%B3n%2C%20quiero%20informaci%C3%B3n%20sobre%20Tapón%20de%204"." target="_blank">Consultar →</a><span style="font-size:12px;color:#8a94a3">Cotizar</span></div></div></article><article class="card reveal" data-category="galvanizado">
+<div class="photo"><img src="assets/galv_3.jpg" alt="Tapón de 3""></div>
+<div class="cardbody"><div class="tag">Lámina galvanizada</div><h3>Tapón de 3"</h3><p>Referencia disponible en el catálogo de Repujados Bahamón.</p>
+<div class="card-actions"><a class="link" href="https://wa.me/573148594677?text=Hola%20Repujados%20Baham%C3%B3n%2C%20quiero%20informaci%C3%B3n%20sobre%20Tapón%20de%203"." target="_blank">Consultar →</a><span style="font-size:12px;color:#8a94a3">Cotizar</span></div></div></article><article class="card reveal" data-category="galvanizado">
+<div class="photo"><img src="assets/galv_2.jpg" alt="Tapón de 2""></div>
+<div class="cardbody"><div class="tag">Lámina galvanizada</div><h3>Tapón de 2"</h3><p>Referencia disponible en el catálogo de Repujados Bahamón.</p>
+<div class="card-actions"><a class="link" href="https://wa.me/573148594677?text=Hola%20Repujados%20Baham%C3%B3n%2C%20quiero%20informaci%C3%B3n%20sobre%20Tapón%20de%202"." target="_blank">Consultar →</a><span style="font-size:12px;color:#8a94a3">Cotizar</span></div></div></article><article class="card reveal" data-category="galvanizado">
+<div class="photo"><img src="assets/galv_1_5.jpg" alt="Tapón de 1 1/2""></div>
+<div class="cardbody"><div class="tag">Lámina galvanizada</div><h3>Tapón de 1 1/2"</h3><p>Referencia disponible en el catálogo de Repujados Bahamón.</p>
+<div class="card-actions"><a class="link" href="https://wa.me/573148594677?text=Hola%20Repujados%20Baham%C3%B3n%2C%20quiero%20informaci%C3%B3n%20sobre%20Tapón%20de%201%201/2"." target="_blank">Consultar →</a><span style="font-size:12px;color:#8a94a3">Cotizar</span></div></div></article><article class="card reveal" data-category="galvanizado">
+<div class="photo"><img src="assets/galv_varios.jpg" alt="Tapones en varias medidas"></div>
+<div class="cardbody"><div class="tag">Línea galvanizada</div><h3>Tapones en varias medidas</h3><p>Referencia disponible en el catálogo de Repujados Bahamón.</p>
+<div class="card-actions"><a class="link" href="https://wa.me/573148594677?text=Hola%20Repujados%20Baham%C3%B3n%2C%20quiero%20informaci%C3%B3n%20sobre%20Tapones%20en%20varias%20medidas." target="_blank">Consultar →</a><span style="font-size:12px;color:#8a94a3">Cotizar</span></div></div></article><article class="card reveal" data-category="aluminio">
+<div class="photo"><img src="assets/alu_3.jpg" alt="Tapón de 3""></div>
+<div class="cardbody"><div class="tag">Aluminio</div><h3>Tapón de 3"</h3><p>Referencia disponible en el catálogo de Repujados Bahamón.</p>
+<div class="card-actions"><a class="link" href="https://wa.me/573148594677?text=Hola%20Repujados%20Baham%C3%B3n%2C%20quiero%20informaci%C3%B3n%20sobre%20Tapón%20de%203"." target="_blank">Consultar →</a><span style="font-size:12px;color:#8a94a3">Cotizar</span></div></div></article><article class="card reveal" data-category="aluminio">
+<div class="photo"><img src="assets/alu_2.jpg" alt="Tapón de 2""></div>
+<div class="cardbody"><div class="tag">Aluminio</div><h3>Tapón de 2"</h3><p>Referencia disponible en el catálogo de Repujados Bahamón.</p>
+<div class="card-actions"><a class="link" href="https://wa.me/573148594677?text=Hola%20Repujados%20Baham%C3%B3n%2C%20quiero%20informaci%C3%B3n%20sobre%20Tapón%20de%202"." target="_blank">Consultar →</a><span style="font-size:12px;color:#8a94a3">Cotizar</span></div></div></article><article class="card reveal" data-category="aluminio">
+<div class="photo"><img src="assets/alu_1_5.jpg" alt="Tapón de 1 1/2""></div>
+<div class="cardbody"><div class="tag">Aluminio</div><h3>Tapón de 1 1/2"</h3><p>Referencia disponible en el catálogo de Repujados Bahamón.</p>
+<div class="card-actions"><a class="link" href="https://wa.me/573148594677?text=Hola%20Repujados%20Baham%C3%B3n%2C%20quiero%20informaci%C3%B3n%20sobre%20Tapón%20de%201%201/2"." target="_blank">Consultar →</a><span style="font-size:12px;color:#8a94a3">Cotizar</span></div></div></article><article class="card reveal" data-category="aluminio">
+<div class="photo"><img src="assets/alu_1_25.jpg" alt="Tapón de 1 1/4""></div>
+<div class="cardbody"><div class="tag">Aluminio</div><h3>Tapón de 1 1/4"</h3><p>Referencia disponible en el catálogo de Repujados Bahamón.</p>
+<div class="card-actions"><a class="link" href="https://wa.me/573148594677?text=Hola%20Repujados%20Baham%C3%B3n%2C%20quiero%20informaci%C3%B3n%20sobre%20Tapón%20de%201%201/4"." target="_blank">Consultar →</a><span style="font-size:12px;color:#8a94a3">Cotizar</span></div></div></article><article class="card reveal" data-category="aluminio">
+<div class="photo"><img src="assets/alu_hierro_1.jpg" alt="Tapón de 1""></div>
+<div class="cardbody"><div class="tag">Aluminio y hierro</div><h3>Tapón de 1"</h3><p>Referencia disponible en el catálogo de Repujados Bahamón.</p>
+<div class="card-actions"><a class="link" href="https://wa.me/573148594677?text=Hola%20Repujados%20Baham%C3%B3n%2C%20quiero%20informaci%C3%B3n%20sobre%20Tapón%20de%201"." target="_blank">Consultar →</a><span style="font-size:12px;color:#8a94a3">Cotizar</span></div></div></article><article class="card reveal" data-category="especial">
+<div class="photo"><img src="assets/flanges.jpg" alt="Flanches y escudos"></div>
+<div class="cardbody"><div class="tag">Escudos metálicos</div><h3>Flanches y escudos</h3><p>Referencia disponible en el catálogo de Repujados Bahamón.</p>
+<div class="card-actions"><a class="link" href="https://wa.me/573148594677?text=Hola%20Repujados%20Baham%C3%B3n%2C%20quiero%20informaci%C3%B3n%20sobre%20Flanches%20y%20escudos." target="_blank">Consultar →</a><span style="font-size:12px;color:#8a94a3">Cotizar</span></div></div></article><article class="card reveal" data-category="especial">
+<div class="photo"><img src="assets/balls.jpg" alt="Bolas metálicas"></div>
+<div class="cardbody"><div class="tag">Para pasamanos</div><h3>Bolas metálicas</h3><p>Referencia disponible en el catálogo de Repujados Bahamón.</p>
+<div class="card-actions"><a class="link" href="https://wa.me/573148594677?text=Hola%20Repujados%20Baham%C3%B3n%2C%20quiero%20informaci%C3%B3n%20sobre%20Bolas%20metálicas." target="_blank">Consultar →</a><span style="font-size:12px;color:#8a94a3">Cotizar</span></div></div></article></div></div></section>
+
+<section class="about" id="empresa"><div class="container about-grid">
+<div class="reveal"><div class="kicker" style="color:#e5c47e">Repujados Bahamón</div><h2>Un portafolio pensado para vender.</h2><p>La propuesta visual toma como punto de partida el material entregado por el negocio y lo transforma en una experiencia web más limpia, moderna y fácil de recorrer.</p><p>El objetivo del prototipo es que un cliente pueda conocer las referencias, identificar la línea que necesita y comunicarse rápidamente para solicitar información o cotización.</p></div>
+<div class="about-box reveal"><img src="assets/hero.jpg" alt="Repujados Bahamón"></div>
+</div></section>
+
+<section class="contact" id="contacto"><div class="container"><div class="contact-box reveal">
+<div><div class="kicker">Contacto</div><h2>¿Qué pieza necesitas?</h2><p>Comunícate directamente con Repujados Bahamón por WhatsApp.</p></div>
+<a class="whatsapp" href="https://wa.me/573148594677" target="_blank">WhatsApp · 314 859 4677</a>
+</div></div></section>
+</main>
+<footer><div class="container foot"><div><strong>Repujados Bahamón</strong> · Indumentaria y accesorios</div><div>Prototipo web · Catálogo digital</div></div></footer>
+<script>
+const filters=document.querySelectorAll('.filter'), cards=document.querySelectorAll('.card');
+filters.forEach(btn=>btn.addEventListener('click',()=>{filters.forEach(b=>b.classList.remove('active'));btn.classList.add('active');const f=btn.dataset.filter;cards.forEach(c=>c.style.display=(f==='all'||c.dataset.category===f)?'flex':'none')}));
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('show')}),{threshold:.08});
+document.querySelectorAll('.reveal').forEach(e=>io.observe(e));
+</script>
+</body></html>
+</body>
+</html>
