@@ -8,7 +8,7 @@ a{text-decoration:none;color:inherit}img{max-width:100%}
 header{position:fixed;top:0;left:0;right:0;z-index:20;background:rgba(8,30,58,.92);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,.1)}
 .nav{height:76px;display:flex;align-items:center;justify-content:space-between;gap:16px;color:#fff}
 .brand{display:flex;align-items:center;gap:12px;font-weight:700}
-.brand img{width:45px;height:45px;object-fit:cover;border-radius:50%;border:1px solid var(--gold);background:#0c2f5b}
+.brand img{width:54px;height:54px;object-fit:cover;border-radius:50%;border:1px solid var(--gold);background:#0c2f5b}
 .brand span{font-family:"Playfair Display",serif;font-size:20px}
 .navlinks{display:flex;gap:28px;font-size:14px}.navlinks a{opacity:.88}.navlinks a:hover{opacity:1;color:var(--gold)}
 .menu-btn{display:none;background:none;border:1px solid rgba(255,255,255,.3);color:#fff;border-radius:10px;width:42px;height:42px;font-size:20px;cursor:pointer}
