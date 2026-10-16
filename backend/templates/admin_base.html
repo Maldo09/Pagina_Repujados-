@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% block titulo %}Panel{% endblock %} · Repujados Bahamón</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
+<style>
+body{margin:0;font-family:"DM Sans",sans-serif;background:#f5f7fa;color:#101820}
+a{color:#164f91}.top{background:#0c2f5b;color:#fff;padding:16px 4%;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.top a{color:#fff;margin-left:16px;font-size:14px}.top strong{font-family:"Playfair Display",serif;font-size:20px}
+.wrap{width:min(1100px,92%);margin:30px auto}
+h1,h2{font-family:"Playfair Display",serif}
+.box{background:#fff;border:1px solid #e5eaf0;border-radius:18px;padding:22px;margin-bottom:26px;overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:14px}th,td{text-align:left;padding:10px;border-bottom:1px solid #eef1f5;vertical-align:middle}
+th{font-size:12px;text-transform:uppercase;color:#667085;letter-spacing:.5px}
+.thumb{width:52px;height:52px;object-fit:contain;background:#eef3f8;border-radius:8px}
+.btn{display:inline-block;padding:9px 15px;border-radius:999px;border:0;background:#164f91;color:#fff;font:inherit;font-size:13px;font-weight:700;cursor:pointer;text-decoration:none}
+.btn.gris{background:#e6ebf1;color:#101820}.btn.rojo{background:#c0392b}
+.pill{font-size:11px;padding:3px 9px;border-radius:999px;font-weight:700}.si{background:#e8f7ee;color:#146c3b}.no{background:#fff3dc;color:#8a5a00}
+label{display:block;font-size:13px;font-weight:700;margin:14px 0 6px}
+input,select,textarea{width:100%;padding:11px 13px;border:1px solid #d0d8e2;border-radius:10px;font:inherit;box-sizing:border-box}
+.alerta{padding:12px 16px;border-radius:12px;margin-bottom:18px}.alerta.error{background:#fdecec;color:#9b1c1c}.alerta.ok{background:#e8f7ee;color:#146c3b}
+.fila{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+</style>
+</head>
+<body>
+<div class="top"><strong>Repujados Bahamón · Panel</strong>
+  <div><a href="{{ url_for('inicio') }}" target="_blank">Ver página</a>{% if session.admin %}<a href="{{ url_for('admin') }}">Inicio panel</a><a href="{{ url_for('salir') }}">Salir</a>{% endif %}</div>
+</div>
+<div class="wrap">
+  {% with mensajes = get_flashed_messages(with_categories=true) %}
+    {% for cat, msg in mensajes %}<div class="alerta {{ cat }}">{{ msg }}</div>{% endfor %}
+  {% endwith %}
+  {% block contenido %}{% endblock %}
+</div>
+</body>
+</html>

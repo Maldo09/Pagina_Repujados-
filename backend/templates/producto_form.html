@@ -1,0 +1,41 @@
+{% extends "admin_base.html" %}
+{% block titulo %}{{ 'Editar' if p.id else 'Nuevo' }} producto{% endblock %}
+{% block contenido %}
+<div class="box" style="max-width:640px">
+  <h2 style="margin-top:0">{{ 'Editar' if p.id else 'Nuevo' }} producto</h2>
+  <form method="post" enctype="multipart/form-data">
+    <label for="nombre">Nombre</label>
+    <input id="nombre" name="nombre" value="{{ p.nombre or '' }}" required placeholder='Ej: Tapón de 2"'>
+
+    <label for="categoria">Línea (filtro del catálogo)</label>
+    <select id="categoria" name="categoria">
+      {% for clave, nombre in CATEGORIAS.items() %}
+      <option value="{{ clave }}" {{ 'selected' if p.categoria == clave }}>{{ nombre }}</option>
+      {% endfor %}
+    </select>
+
+    <label for="etiqueta">Etiqueta (texto pequeño en azul)</label>
+    <input id="etiqueta" name="etiqueta" value="{{ p.etiqueta or '' }}" required placeholder="Ej: Lámina galvanizada">
+
+    <label for="descripcion">Descripción</label>
+    <textarea id="descripcion" name="descripcion" rows="3">{{ p.descripcion or '' }}</textarea>
+
+    <label for="imagen">Imagen {% if p.id %}(deja vacío para conservar la actual){% endif %}</label>
+    {% if p.id %}<img class="thumb" style="width:90px;height:90px" src="{{ p.url_imagen() }}" alt="">{% endif %}
+    <input id="imagen" name="imagen" type="file" accept=".jpg,.jpeg,.png,.webp">
+
+    <label for="orden">Orden (los números menores salen primero)</label>
+    <input id="orden" name="orden" type="number" value="{{ p.orden or 0 }}">
+
+    <label><input type="checkbox" name="activo" style="width:auto" {{ 'checked' if p.activo }}> Visible en la página</label>
+
+    <p class="fila"><button class="btn" type="submit">Guardar</button>
+      <a class="btn gris" href="{{ url_for('admin') }}">Cancelar</a></p>
+  </form>
+  {% if p.id %}
+  <form method="post" action="{{ url_for('eliminar_producto', pid=p.id) }}" onsubmit="return confirm('¿Eliminar este producto?')">
+    <button class="btn rojo" type="submit">Eliminar producto</button>
+  </form>
+  {% endif %}
+</div>
+{% endblock %}

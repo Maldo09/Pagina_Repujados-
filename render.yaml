@@ -1,0 +1,27 @@
+# Despliegue automático en Render (render.com → New → Blueprint → este repositorio)
+services:
+  - type: web
+    name: repujados-bahamon
+    runtime: python
+    rootDir: backend
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: repujados-db
+          property: connectionString
+      - key: SECRET_KEY
+        generateValue: true
+      - key: ADMIN_PASSWORD
+        sync: false          # Render la pide al crear el servicio
+      - key: WHATSAPP
+        value: "573148594677"
+      - key: PYTHON_VERSION
+        value: "3.12.7"
+
+databases:
+  - name: repujados-db
+    plan: free
+    databaseName: repujados

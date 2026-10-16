@@ -1,0 +1,41 @@
+{% extends "admin_base.html" %}
+{% block titulo %}Panel{% endblock %}
+{% block contenido %}
+<div class="box" id="cotizaciones">
+  <div class="fila"><h2 style="margin:0">Solicitudes de cotización</h2>
+    <span class="pill no">{{ pendientes }} pendiente{{ '' if pendientes == 1 else 's' }}</span></div>
+  {% if cotizaciones %}
+  <table>
+    <tr><th>Fecha</th><th>Cliente</th><th>Producto</th><th>Cantidad</th><th>Mensaje</th><th>Estado</th></tr>
+    {% for c in cotizaciones %}
+    <tr>
+      <td>{{ c.creada.strftime('%d/%m/%Y %H:%M') }}</td>
+      <td><strong>{{ c.nombre }}</strong><br><a href="https://wa.me/57{{ c.telefono|replace(' ', '') }}" target="_blank">{{ c.telefono }}</a></td>
+      <td>{{ c.producto or '—' }}</td>
+      <td>{{ c.cantidad or '—' }}</td>
+      <td>{{ c.mensaje or '—' }}</td>
+      <td><form method="post" action="{{ url_for('marcar_atendida', cid=c.id) }}">
+        <button class="btn {{ 'gris' if c.atendida else '' }}" type="submit">{{ 'Atendida ✓' if c.atendida else 'Marcar atendida' }}</button></form></td>
+    </tr>
+    {% endfor %}
+  </table>
+  {% else %}<p>Aún no hay solicitudes.</p>{% endif %}
+</div>
+
+<div class="box">
+  <div class="fila"><h2 style="margin:0">Productos</h2><a class="btn" href="{{ url_for('editar_producto') }}">+ Nuevo producto</a></div>
+  <table>
+    <tr><th></th><th>Nombre</th><th>Línea</th><th>Orden</th><th>Visible</th><th></th></tr>
+    {% for p in productos %}
+    <tr>
+      <td><img class="thumb" src="{{ p.url_imagen() }}" alt="" onerror="this.src='{{ url_for('static', filename='assets/sin-imagen.svg') }}'"></td>
+      <td><strong>{{ p.nombre }}</strong><br><small>{{ p.etiqueta }}</small></td>
+      <td>{{ CATEGORIAS.get(p.categoria, p.categoria) }}</td>
+      <td>{{ p.orden }}</td>
+      <td><span class="pill {{ 'si' if p.activo else 'no' }}">{{ 'Sí' if p.activo else 'Oculto' }}</span></td>
+      <td><a class="btn gris" href="{{ url_for('editar_producto', pid=p.id) }}">Editar</a></td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+{% endblock %}

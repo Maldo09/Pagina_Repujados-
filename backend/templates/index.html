@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Repujados Bahamón | Tapones, accesorios y piezas metálicas</title>
+<meta name="description" content="Catálogo de Repujados Bahamón: tapones en lámina galvanizada y aluminio, flanches, escudos y bolas metálicas. Cotiza por WhatsApp.">
+<link rel="icon" href="{{ url_for('static', filename='assets/logo.png') }}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+
+<header><div class="container nav">
+  <a class="brand" href="#inicio"><img src="{{ url_for('static', filename='assets/logo.png') }}" alt="Logo Repujados Bahamón"><span>Repujados Bahamón</span></a>
+  <nav class="navlinks" id="menu">
+    <a href="#inicio">Inicio</a><a href="#catalogo">Catálogo</a><a href="#empresa">Nosotros</a><a href="#contacto">Contacto</a>
+  </nav>
+  <a class="btn btn-primary" href="https://wa.me/{{ WHATSAPP }}" target="_blank" rel="noopener">WhatsApp</a>
+  <button class="menu-btn" id="menuBtn" aria-label="Abrir menú">☰</button>
+</div></header>
+
+<main>
+<section class="hero" id="inicio"><div class="container hero-content reveal">
+  <div class="eyebrow">Indumentaria y accesorios metálicos</div>
+  <h1>Metal que toma forma.</h1>
+  <p>Tapones, escudos y accesorios repujados en lámina galvanizada, aluminio y hierro, con acabados funcionales, resistentes y de presentación profesional.</p>
+  <div class="actions">
+    <a class="btn btn-primary" href="#catalogo">Ver catálogo</a>
+    <a class="btn btn-secondary" href="#contacto">Solicitar cotización</a>
+  </div>
+</div></section>
+
+<section class="features"><div class="container">
+  <div class="section-head reveal"><div class="kicker">Por qué elegirnos</div><h2>Piezas pensadas para durar</h2>
+    <p>Fabricamos referencias para tubería, pasamanos y estructuras metálicas, en varias medidas y materiales.</p></div>
+  <div class="feature-grid">
+    <div class="feature reveal"><div class="icon">◈</div><h3>Varios materiales</h3><p>Lámina galvanizada, aluminio y hierro según el uso y el acabado que necesites.</p></div>
+    <div class="feature reveal"><div class="icon">✓</div><h3>Medidas disponibles</h3><p>Tapones desde 1" hasta 4" y piezas especiales bajo consulta.</p></div>
+    <div class="feature reveal"><div class="icon">◆</div><h3>Atención directa</h3><p>Cotiza por WhatsApp y recibe respuesta directamente del fabricante.</p></div>
+  </div>
+</div></section>
+
+<section class="catalog" id="catalogo"><div class="container">
+  <div class="section-head reveal"><div class="kicker">Productos</div><h2>Catálogo</h2>
+    <p>Filtra por material y consulta la referencia que necesitas.</p></div>
+
+  <div class="filters">
+    <button class="filter active" data-filter="all">Todos</button>
+    {% for clave, nombre in CATEGORIAS.items() %}
+    <button class="filter" data-filter="{{ clave }}">{{ nombre }}</button>
+    {% endfor %}
+  </div>
+
+  <div class="products">
+    {% for p in productos %}
+    <article class="card reveal" data-category="{{ p.categoria }}">
+      <div class="photo"><img src="{{ p.url_imagen() }}" alt="{{ p.nombre }} - {{ p.etiqueta }}" loading="lazy"
+           onerror="this.onerror=null;this.src='{{ url_for('static', filename='assets/sin-imagen.svg') }}'"></div>
+      <div class="cardbody">
+        <div class="tag">{{ p.etiqueta }}</div>
+        <h3>{{ p.nombre }}</h3>
+        <p>{{ p.descripcion }}</p>
+        <div class="card-actions">
+          <a class="link" href="#contacto" data-producto="{{ p.nombre }} ({{ p.etiqueta }})">Cotizar →</a>
+          <a class="mini" href="{{ p.link_whatsapp() }}" target="_blank" rel="noopener">WhatsApp</a>
+        </div>
+      </div>
+    </article>
+    {% else %}
+    <p class="vacio">Pronto publicaremos nuestros productos.</p>
+    {% endfor %}
+  </div>
+</div></section>
+
+<section class="about" id="empresa"><div class="container about-grid">
+  <div class="reveal">
+    <div class="kicker" style="color:#e5c47e">Repujados Bahamón</div>
+    <h2>Trabajo en metal con acabado profesional.</h2>
+    <p>En Repujados Bahamón fabricamos tapones, escudos y accesorios metálicos mediante repujado, un proceso que da forma a la lámina para lograr piezas resistentes y bien terminadas.</p>
+    <p>Atendemos a ferreterías, talleres, constructores y clientes particulares que buscan referencias confiables y una atención cercana.</p>
+    <div class="stats">
+      <div><strong>{{ productos|length }}</strong><span>referencias en catálogo</span></div>
+      <div><strong>{{ CATEGORIAS|length }}</strong><span>líneas de producto</span></div>
+      <div><strong>1"–4"</strong><span>rango de medidas</span></div>
+    </div>
+  </div>
+  <div class="about-box reveal"><img src="{{ url_for('static', filename='assets/hero.jpg') }}" alt="Taller de Repujados Bahamón"></div>
+</div></section>
+
+<section class="contact" id="contacto"><div class="container"><div class="contact-box reveal">
+  <div>
+    <div class="kicker">Contacto</div>
+    <h2>¿Qué pieza necesitas?</h2>
+    <p>Déjanos tus datos y la referencia que te interesa. Al enviar, se abrirá WhatsApp con tu solicitud lista para mandar.</p>
+    <a class="whatsapp" href="https://wa.me/{{ WHATSAPP }}" target="_blank" rel="noopener">WhatsApp · {{ WHATSAPP_TEXTO }}</a>
+  </div>
+
+  <form class="form" method="post" action="{{ url_for('cotizar') }}">
+    {% with mensajes = get_flashed_messages(with_categories=true) %}
+      {% for cat, msg in mensajes %}<div class="alerta {{ cat }} full">{{ msg }}</div>{% endfor %}
+    {% endwith %}
+    <div><label for="nombre">Nombre *</label><input id="nombre" name="nombre" required maxlength="120"></div>
+    <div><label for="telefono">Teléfono *</label><input id="telefono" name="telefono" type="tel" required maxlength="30"></div>
+    <div><label for="producto">Producto</label>
+      <select id="producto" name="producto">
+        <option value="">Selecciona una referencia</option>
+        {% for p in productos %}<option>{{ p.nombre }} ({{ p.etiqueta }})</option>{% endfor %}
+        <option>Otro / pieza especial</option>
+      </select></div>
+    <div><label for="cantidad">Cantidad</label><input id="cantidad" name="cantidad" placeholder="Ej: 50 unidades" maxlength="40"></div>
+    <div class="full"><label for="mensaje">Mensaje</label><textarea id="mensaje" name="mensaje" placeholder="Cuéntanos medidas, acabado o fecha de entrega"></textarea></div>
+    <div class="full"><button class="btn btn-blue" type="submit">Enviar solicitud</button> <span class="nota">* Campos obligatorios</span></div>
+  </form>
+</div></div></section>
+</main>
+
+<footer><div class="container foot">
+  <div><strong>Repujados Bahamón</strong> · Indumentaria y accesorios</div>
+  <div>© {{ anio }} Repujados Bahamón · Todos los derechos reservados</div>
+</div></footer>
+
+<a class="wa-float" href="https://wa.me/{{ WHATSAPP }}" target="_blank" rel="noopener" aria-label="Escribir por WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.1.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2l-.4-.2z"/></svg>
+</a>
+
+<div class="visor" id="visor"><button aria-label="Cerrar">×</button><img alt=""></div>
+
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

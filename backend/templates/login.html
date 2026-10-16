@@ -1,0 +1,12 @@
+{% extends "admin_base.html" %}
+{% block titulo %}Ingresar{% endblock %}
+{% block contenido %}
+<div class="box" style="max-width:380px;margin:60px auto">
+  <h2 style="margin-top:0">Ingresar al panel</h2>
+  <form method="post">
+    <label for="clave">Clave de administrador</label>
+    <input id="clave" name="clave" type="password" required autofocus>
+    <p><button class="btn" type="submit">Entrar</button></p>
+  </form>
+</div>
+{% endblock %}
