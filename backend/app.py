@@ -146,6 +146,12 @@ def inicio():
     return render_template("index.html", productos=productos)
 
 
+@app.route("/salud")
+def salud():
+    """Respuesta mínima para el servicio que mantiene la página despierta."""
+    return "ok", 200, {"Cache-Control": "no-store"}
+
+
 @app.route("/img/<int:pid>")
 def imagen_producto(pid):
     p = db.get_or_404(Producto, pid)
