@@ -112,3 +112,84 @@ footer{background:#071a31;color:#aebdd0;padding:28px 0}
   .foot{flex-direction:column;align-items:flex-start}
 }
 .foot{padding-right:70px}@media(max-width:800px){.foot{padding-right:0}}
+
+/* ================= Tienda: carrito y pedidos ================= */
+.nav-actions{display:flex;align-items:center;gap:12px}
+.cart-btn{position:relative;width:46px;height:46px;border-radius:50%;display:grid;place-items:center;border:1px solid rgba(255,255,255,.3);color:#fff;transition:.2s}
+.cart-btn:hover{background:rgba(255,255,255,.1);border-color:var(--gold)}
+.cart-btn svg{width:22px;height:22px;fill:currentColor}
+.cart-count{position:absolute;top:-4px;right:-4px;min-width:20px;height:20px;padding:0 5px;border-radius:999px;background:var(--gold);color:#172333;font-size:11px;font-weight:700;display:grid;place-items:center}
+.cart-count[hidden]{display:none}
+
+.precio{font-family:"Playfair Display",serif;font-size:24px;font-weight:700;color:var(--blue2);margin-top:12px;font-variant-numeric:tabular-nums}
+.precio small{font-family:"DM Sans",sans-serif;font-size:12px;font-weight:500;color:var(--muted)}
+.precio.consultar{font-family:"DM Sans",sans-serif;font-size:14px;font-weight:600;color:var(--muted)}
+.btn-add{padding:11px 16px;font-size:13px}
+button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #b9cfee;outline-offset:2px}
+
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,30px);opacity:0;pointer-events:none;z-index:50;background:#0c2f5b;color:#fff;padding:14px 20px;border-radius:14px;font-size:14px;box-shadow:0 14px 30px rgba(0,0,0,.25);transition:.3s;max-width:calc(100% - 32px)}
+.toast.visible{opacity:1;transform:translate(-50%,0);pointer-events:auto}
+.toast a{color:var(--gold);font-weight:700;margin-left:6px}
+
+body.tienda{background:#f5f7fa}
+.tienda-main{padding:116px 0 70px;min-height:70vh}
+.tienda-main h1{font-family:"Playfair Display",serif;font-size:36px;margin:0 0 20px}
+.tienda-main h2{font-family:"Playfair Display",serif;font-size:24px;margin:0 0 14px}
+
+.carrito{display:grid;grid-template-columns:1.4fr 1fr;gap:28px;align-items:start}
+.carrito-items,.carrito-resumen,.pedido-estado,.datos-pago,.pedido-detalle{background:#fff;border:1px solid #e5eaf0;border-radius:22px;padding:28px;min-width:0}
+.carrito-resumen{position:sticky;top:96px}
+.carrito-vacio{display:none;text-align:center;padding:30px 0;color:var(--muted)}
+.carrito.vacio .carrito-vacio{display:block}
+.linea{display:grid;grid-template-columns:64px 1fr auto auto 32px;gap:14px;align-items:center;padding:14px 0;border-bottom:1px solid #eef1f5}
+.linea img{width:64px;height:64px;object-fit:contain;background:#eef3f8;border-radius:12px}
+.linea-info{min-width:0}
+.linea-info strong{display:block;font-size:15px}
+.linea-info span,.linea-info em{display:block;font-size:12px;color:var(--muted);font-style:normal}
+.cantidad{display:flex;align-items:center;border:1px solid #d0d8e2;border-radius:999px;overflow:hidden}
+.cantidad button{width:32px;height:34px;border:0;background:#fff;font-size:18px;cursor:pointer;color:var(--blue)}
+.cantidad button:hover{background:#eef3f8}
+.cantidad input{width:44px;height:34px;border:0;text-align:center;font:inherit;font-variant-numeric:tabular-nums;-moz-appearance:textfield}
+.cantidad input::-webkit-inner-spin-button{-webkit-appearance:none}
+.linea-sub{font-weight:700;font-variant-numeric:tabular-nums;min-width:86px;text-align:right}
+.quitar{border:0;background:none;font-size:22px;color:#98a2b3;cursor:pointer;border-radius:8px}
+.quitar:hover{color:#c0392b;background:#fdecec}
+.form-1col{grid-template-columns:1fr}
+.total-fila{display:flex;justify-content:space-between;align-items:baseline;border-top:1px solid #eef1f5;margin-top:20px;padding-top:16px}
+.total-fila strong{font-family:"Playfair Display",serif;font-size:30px;color:var(--blue2);font-variant-numeric:tabular-nums}
+.btn-pagar{width:100%;margin-top:14px;padding:16px;font-size:15px}
+.btn-pagar:disabled{opacity:.5;cursor:not-allowed}
+
+.pedido-estado{text-align:center;max-width:720px;margin:0 auto 20px}
+.sello{width:64px;height:64px;border-radius:50%;margin:0 auto 14px;display:grid;place-items:center;font-size:30px;font-weight:700;background:#e8f7ee;color:#146c3b}
+.estado-pendiente .sello{background:#fff3dc;color:#8a5a00}
+.estado-declined .sello,.estado-voided .sello,.estado-error .sello{background:#fdecec;color:#9b1c1c}
+.pedido-estado p{color:var(--muted);line-height:1.7;margin:0 auto 10px;max-width:56ch}
+.pedido-estado .ref{color:var(--ink)}
+.datos-pago,.pedido-detalle{max-width:720px;margin:0 auto 20px}
+.datos-pago pre{background:#f5f7fa;border:1px dashed #b9c6d6;border-radius:14px;padding:16px;font-family:"DM Sans",sans-serif;font-size:16px;line-height:1.7;white-space:pre-wrap;margin:14px 0}
+.datos-pago .grande{font-size:24px;color:var(--blue2);font-variant-numeric:tabular-nums}
+.datos-pago .whatsapp{margin-top:10px}
+.pedido-detalle table{width:100%;border-collapse:collapse;font-size:14px}
+.pedido-detalle td{padding:10px 0;border-bottom:1px solid #eef1f5}
+.pedido-detalle td:last-child{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap;padding-left:12px}
+.pedido-detalle tr.total td{font-weight:700;border-bottom:0;font-size:16px}
+.pedido-detalle .actions{margin-top:20px;align-items:center}
+
+@media(max-width:900px){
+  .carrito{grid-template-columns:1fr}
+  .carrito-resumen{position:static}
+}
+@media(max-width:800px){
+  .nav .nav-actions .btn-primary{display:none}
+  .nav .nav-actions .btn-secondary{padding:10px 14px;font-size:12px}
+  .tienda-main{padding-top:100px}
+  .carrito-items,.carrito-resumen,.pedido-estado,.datos-pago,.pedido-detalle{padding:20px}
+  .linea{grid-template-columns:56px 1fr auto;grid-template-areas:"img info quitar" "img cant sub";row-gap:10px}
+  .linea img{grid-area:img;width:56px;height:56px}
+  .linea-info{grid-area:info}.quitar{grid-area:quitar;justify-self:end}
+  .cantidad{grid-area:cant;justify-self:start}.linea-sub{grid-area:sub;align-self:center}
+}
+.txt-corto{display:none}
+@media(max-width:480px){.txt-largo{display:none}.txt-corto{display:inline}}
+@media(max-width:800px){.toast{bottom:92px}}

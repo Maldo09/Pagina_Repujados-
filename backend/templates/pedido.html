@@ -1,0 +1,76 @@
+{% extends "tienda_base.html" %}
+{% block titulo %}Pedido {{ pedido.referencia }}{% endblock %}
+{% block contenido %}
+<div class="pedido-estado estado-{{ pedido.estado|lower }}">
+  {% if pedido.estado == "APPROVED" %}
+    <div class="sello">✓</div>
+    <h1>¡Pago recibido!</h1>
+    <p>Gracias, {{ pedido.nombre }}. Ya estamos preparando tu pedido y te escribiremos por WhatsApp para coordinar el envío.</p>
+  {% elif pedido.estado == "POR_CONFIRMAR" %}
+    <div class="sello">✓</div>
+    <h1>Pedido recibido</h1>
+    <p>Gracias, {{ pedido.nombre }}. Para completarlo, paga por transferencia y envíanos el comprobante por WhatsApp.</p>
+  {% elif pedido.estado == "PENDIENTE" %}
+    <div class="sello">…</div>
+    <h1>Estamos confirmando tu pago</h1>
+    <p>Esto puede tardar unos segundos (con PSE, hasta unos minutos). Esta página se actualiza sola.</p>
+  {% else %}
+    <div class="sello">!</div>
+    <h1>El pago no se completó</h1>
+    <p>Estado: {{ pedido.estado_texto }}. No se hizo ningún cobro. Puedes intentarlo de nuevo desde tu carrito.</p>
+  {% endif %}
+  <p class="ref">Número de pedido: <strong>{{ pedido.referencia }}</strong></p>
+</div>
+
+{% if pedido.estado == "POR_CONFIRMAR" %}
+<div class="datos-pago">
+  <h2>Cómo pagar</h2>
+  <p>Total a transferir: <strong class="grande">{{ pedido.total|pesos }}</strong> <span class="nota">+ envío, que te confirmamos por WhatsApp</span></p>
+  {% if datos_pago %}
+  <pre>{{ datos_pago }}</pre>
+  {% else %}
+  <p>Te enviaremos los datos de pago por WhatsApp.</p>
+  {% endif %}
+  <p class="nota">En la descripción de la transferencia escribe tu número de pedido: <strong>{{ pedido.referencia }}</strong></p>
+  <a class="whatsapp" href="{{ wa_pedido }}" target="_blank" rel="noopener">Enviar pedido y comprobante por WhatsApp</a>
+</div>
+{% endif %}
+
+<div class="pedido-detalle">
+  <h2>Resumen</h2>
+  <table>
+    {% for i in pedido.items %}
+    <tr><td>{{ i.cantidad }} × {{ i.nombre }}</td><td>{{ i.subtotal|pesos }}</td></tr>
+    {% endfor %}
+    <tr class="total"><td>Total productos</td><td>{{ pedido.total|pesos }}</td></tr>
+  </table>
+  <p class="nota">Envío a: {{ pedido.direccion }}, {{ pedido.ciudad }}</p>
+  <div class="actions">
+    {% if pedido.estado in ("DECLINED", "VOIDED", "ERROR") %}
+    <a class="btn btn-blue" href="{{ url_for('carrito') }}">Volver al carrito</a>
+    {% else %}
+    <a class="btn btn-blue" href="{{ url_for('inicio') }}">Volver a la tienda</a>
+    {% endif %}
+    {% if pedido.estado != "POR_CONFIRMAR" %}
+    <a class="link" href="{{ wa_pedido }}" target="_blank" rel="noopener">¿Dudas? Escríbenos por WhatsApp →</a>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+{% if pedido.estado in ("APPROVED", "POR_CONFIRMAR") %}
+  Carrito.vaciar();
+{% elif pedido.estado == "PENDIENTE" %}
+  // vuelve a consultar el estado cada 5 s durante 2 minutos
+  (function () {
+    const n = Number(sessionStorage.getItem('rb_reintentos_{{ pedido.referencia }}') || 0);
+    if (n < 24) {
+      try { sessionStorage.setItem('rb_reintentos_{{ pedido.referencia }}', n + 1); } catch (e) {}
+      setTimeout(() => location.reload(), 5000);
+    }
+  })();
+{% endif %}
+</script>
+{% endblock %}

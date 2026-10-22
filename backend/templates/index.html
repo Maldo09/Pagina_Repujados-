@@ -18,8 +18,14 @@
   <nav class="navlinks" id="menu">
     <a href="#inicio">Inicio</a><a href="#catalogo">Catálogo</a><a href="#empresa">Nosotros</a><a href="#contacto">Contacto</a>
   </nav>
+  <div class="nav-actions">
   <a class="btn btn-primary" href="https://wa.me/{{ WHATSAPP }}" target="_blank" rel="noopener">WhatsApp</a>
+  <a class="cart-btn" href="{{ url_for('carrito') }}" aria-label="Ver carrito">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 18a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm10 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zM5.2 4l.4 2H20a1 1 0 0 1 1 1.2l-1.4 7A2 2 0 0 1 17.6 16H8a2 2 0 0 1-2-1.6L3.6 3H2V1h3a1 1 0 0 1 1 .8L6.2 4z"/></svg>
+    <span class="cart-count" data-contador hidden>0</span>
+  </a>
   <button class="menu-btn" id="menuBtn" aria-label="Abrir menú">☰</button>
+  </div>
 </div></header>
 
 <main>
@@ -45,7 +51,7 @@
 
 <section class="catalog" id="catalogo"><div class="container">
   <div class="section-head reveal"><div class="kicker">Productos</div><h2>Catálogo</h2>
-    <p>Filtra por material y consulta la referencia que necesitas.</p></div>
+    <p>Filtra por material, agrega al carrito lo que necesitas y haz tu pedido en línea.</p></div>
 
   <div class="filters">
     <button class="filter active" data-filter="all">Todos</button>
@@ -63,10 +69,19 @@
         <div class="tag">{{ p.etiqueta }}</div>
         <h3>{{ p.nombre }}</h3>
         <p>{{ p.descripcion }}</p>
+        {% if p.precio %}
+        <div class="precio">{{ p.precio|pesos }} <small>c/u</small></div>
+        <div class="card-actions">
+          <button class="btn btn-blue btn-add" type="button" data-agregar="{{ p.id }}" data-nombre="{{ p.nombre }} ({{ p.etiqueta }})">Agregar al carrito</button>
+          <a class="link" href="#contacto" data-producto="{{ p.nombre }} ({{ p.etiqueta }})">Por mayor →</a>
+        </div>
+        {% else %}
+        <div class="precio consultar">Precio a consultar</div>
         <div class="card-actions">
           <a class="link" href="#contacto" data-producto="{{ p.nombre }} ({{ p.etiqueta }})">Cotizar →</a>
           <a class="mini" href="{{ p.link_whatsapp() }}" target="_blank" rel="noopener">WhatsApp</a>
         </div>
+        {% endif %}
       </div>
     </article>
     {% else %}
@@ -128,6 +143,7 @@
 
 <div class="visor" id="visor"><button aria-label="Cerrar">×</button><img alt=""></div>
 
+<script src="{{ url_for('static', filename='js/carrito.js') }}"></script>
 <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 </body>
 </html>

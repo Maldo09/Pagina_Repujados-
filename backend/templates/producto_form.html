@@ -17,6 +17,9 @@
     <label for="etiqueta">Etiqueta (texto pequeño en azul)</label>
     <input id="etiqueta" name="etiqueta" value="{{ p.etiqueta or '' }}" required placeholder="Ej: Lámina galvanizada">
 
+    <label for="precio">Precio por unidad en pesos (vacío = "Precio a consultar", no se puede comprar en línea)</label>
+    <input id="precio" name="precio" inputmode="numeric" value="{{ p.precio or '' }}" placeholder="Ej: 12500">
+
     <label for="descripcion">Descripción</label>
     <textarea id="descripcion" name="descripcion" rows="3">{{ p.descripcion or '' }}</textarea>
 

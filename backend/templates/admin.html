@@ -1,6 +1,57 @@
 {% extends "admin_base.html" %}
 {% block titulo %}Panel{% endblock %}
 {% block contenido %}
+<div class="box" id="pedidos">
+  <div class="fila"><h2 style="margin:0">Pedidos de la tienda</h2>
+    <span class="pill no">{{ por_enviar }} por despachar</span></div>
+  <p style="color:#667085;font-size:14px;margin:8px 0 14px">
+    {% if pago_en_linea %}Pago en línea con Wompi activo{% if modo_pruebas %} <strong>(modo pruebas, no cobra dinero real)</strong>{% endif %}.
+    {% else %}Los clientes pagan por transferencia. Cuando veas el dinero en tu cuenta, toca <strong>Confirmar pago</strong>; cuando lo despaches, <strong>Marcar enviado</strong>.{% endif %}
+  </p>
+  {% if pedidos %}
+  <table>
+    <tr><th>Fecha</th><th>Pedido</th><th>Cliente y envío</th><th>Productos</th><th>Total</th><th>Pago</th><th>Envío</th></tr>
+    {% for o in pedidos %}
+    <tr>
+      <td>{{ o.creado.strftime('%d/%m/%Y %H:%M') }}</td>
+      <td><strong>{{ o.referencia }}</strong></td>
+      <td><strong>{{ o.nombre }}</strong><br>
+        <a href="https://wa.me/57{{ o.telefono|replace(' ', '')|replace('+57','') }}" target="_blank">{{ o.telefono }}</a>
+        {% if o.email %}<br><small>{{ o.email }}</small>{% endif %}
+        <br><small>{{ o.direccion }}, {{ o.ciudad }}</small>
+        {% if o.notas %}<br><small><em>{{ o.notas }}</em></small>{% endif %}</td>
+      <td>{% for i in o.items %}{{ i.cantidad }} × {{ i.nombre }}<br>{% endfor %}</td>
+      <td><strong>{{ o.total|pesos }}</strong></td>
+      <td>
+        <span class="pill {{ 'si' if o.estado == 'APPROVED' else 'no' }}">{{ o.estado_texto }}</span>
+        {% if o.metodo_pago %}<br><small>{{ o.metodo_pago }}</small>{% endif %}
+        {% if o.estado == 'POR_CONFIRMAR' %}
+        <form method="post" action="{{ url_for('marcar_pagado', pid=o.id) }}" style="margin-top:6px">
+          <button class="btn" type="submit">Confirmar pago</button></form>
+        {% elif o.estado == 'APPROVED' and not o.wompi_id %}
+        <form method="post" action="{{ url_for('marcar_pagado', pid=o.id) }}" style="margin-top:6px">
+          <button class="btn gris" type="submit" title="Deshacer">Deshacer</button></form>
+        {% endif %}
+      </td>
+      <td>{% if o.estado == 'APPROVED' %}
+        <form method="post" action="{{ url_for('marcar_enviado', pid=o.id) }}">
+          <button class="btn {{ 'gris' if o.enviado else '' }}" type="submit">{{ 'Enviado ✓' if o.enviado else 'Marcar enviado' }}</button></form>
+        {% else %}—{% endif %}</td>
+    </tr>
+    {% endfor %}
+  </table>
+  {% else %}<p>Aún no hay pedidos.</p>{% endif %}
+</div>
+
+<div class="box" id="pagos">
+  <h2 style="margin-top:0">Datos de pago</h2>
+  <p style="color:#667085;font-size:14px;margin-top:0">Esto es lo que ve el cliente después de hacer su pedido. Escribe una cuenta por línea.</p>
+  <form method="post" action="{{ url_for('guardar_datos_pago') }}">
+    <textarea name="datos_pago" rows="5" placeholder="Nequi: 314 859 4677&#10;Bancolombia ahorros: 000-000000-00 a nombre de ...&#10;Llave Bre-B: ...">{{ datos_pago }}</textarea>
+    <p><button class="btn" type="submit">Guardar datos de pago</button></p>
+  </form>
+</div>
+
 <div class="box" id="cotizaciones">
   <div class="fila"><h2 style="margin:0">Solicitudes de cotización</h2>
     <span class="pill no">{{ pendientes }} pendiente{{ '' if pendientes == 1 else 's' }}</span></div>
@@ -25,12 +76,13 @@
 <div class="box">
   <div class="fila"><h2 style="margin:0">Productos</h2><a class="btn" href="{{ url_for('editar_producto') }}">+ Nuevo producto</a></div>
   <table>
-    <tr><th></th><th>Nombre</th><th>Línea</th><th>Orden</th><th>Visible</th><th></th></tr>
+    <tr><th></th><th>Nombre</th><th>Línea</th><th>Precio</th><th>Orden</th><th>Visible</th><th></th></tr>
     {% for p in productos %}
     <tr>
       <td><img class="thumb" src="{{ p.url_imagen() }}" alt="" onerror="this.src='{{ url_for('static', filename='assets/sin-imagen.svg') }}'"></td>
       <td><strong>{{ p.nombre }}</strong><br><small>{{ p.etiqueta }}</small></td>
       <td>{{ CATEGORIAS.get(p.categoria, p.categoria) }}</td>
+      <td>{{ p.precio|pesos if p.precio else 'A consultar' }}</td>
       <td>{{ p.orden }}</td>
       <td><span class="pill {{ 'si' if p.activo else 'no' }}">{{ 'Sí' if p.activo else 'Oculto' }}</span></td>
       <td><a class="btn gris" href="{{ url_for('editar_producto', pid=p.id) }}">Editar</a></td>

@@ -104,7 +104,25 @@ fotos reales con **el mismo nombre** (`galv_4.jpg`, `alu_3.jpg`, `hero.jpg`,
 subidas desde el panel se guardan dentro de PostgreSQL, así no se pierden
 cuando el servidor se reinicia.
 
-## 7. Publicarla en internet con Render (gratis)
+## 7. Tienda en línea (carrito y pedidos)
+
+- **Precios:** en el panel, edita cada producto y escribe su precio en pesos.
+  Los productos sin precio aparecen como "Precio a consultar" y solo se cotizan.
+- **Carrito:** el cliente agrega productos, ajusta cantidades y llena sus datos
+  de envío en `/carrito`. El total siempre lo calcula el servidor con los
+  precios de la base de datos.
+- **Pago por transferencia (activo):** al hacer el pedido, el cliente ve los
+  datos de pago que escribas en el panel (sección *Datos de pago*) y un botón
+  para enviar el pedido y el comprobante por WhatsApp. En *Pedidos de la tienda*
+  tocas **Confirmar pago** cuando veas el dinero y **Marcar enviado** al despachar.
+- **Pago en línea con Wompi (opcional, apagado):** si algún día quieren cobrar
+  con tarjeta/PSE/Nequi dentro de la página, crea una cuenta en wompi.co y, en
+  Render → servicio → *Environment*, agrega `WOMPI_PUBLIC_KEY`,
+  `WOMPI_INTEGRITY_SECRET` y `WOMPI_EVENTS_SECRET`. En Wompi, configura la URL
+  de eventos `https://TU-LINK.onrender.com/wompi/eventos`. Sin tocar código, el
+  botón cambia a "Pagar en línea".
+
+## 8. Publicarla en internet con Render (gratis)
 
 El archivo `render.yaml` ya trae toda la configuración: servidor Python,
 base de datos PostgreSQL y variables.

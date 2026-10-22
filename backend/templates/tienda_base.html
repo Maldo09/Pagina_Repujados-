@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% block titulo %}{% endblock %} | Repujados Bahamón</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="{{ url_for('static', filename='assets/logo.png') }}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body class="tienda">
+
+<header><div class="container nav">
+  <a class="brand" href="{{ url_for('inicio') }}"><img src="{{ url_for('static', filename='assets/logo.png') }}" alt="Logo Repujados Bahamón"><span>Repujados Bahamón</span></a>
+  <div class="nav-actions">
+    <a class="btn btn-secondary" href="{{ url_for('inicio') }}#catalogo">← <span class="txt-largo">Seguir comprando</span><span class="txt-corto">Tienda</span></a>
+    <a class="cart-btn" href="{{ url_for('carrito') }}" aria-label="Ver carrito">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 18a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm10 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zM5.2 4l.4 2H20a1 1 0 0 1 1 1.2l-1.4 7A2 2 0 0 1 17.6 16H8a2 2 0 0 1-2-1.6L3.6 3H2V1h3a1 1 0 0 1 1 .8L6.2 4z"/></svg>
+      <span class="cart-count" data-contador hidden>0</span>
+    </a>
+  </div>
+</div></header>
+
+<main class="tienda-main"><div class="container">
+  {% with mensajes = get_flashed_messages(with_categories=true) %}
+    {% for cat, msg in mensajes %}<div class="alerta {{ cat }}">{{ msg }}</div>{% endfor %}
+  {% endwith %}
+  {% block contenido %}{% endblock %}
+</div></main>
+
+<footer><div class="container foot">
+  <div><strong>Repujados Bahamón</strong> · Indumentaria y accesorios</div>
+  <div>WhatsApp {{ WHATSAPP_TEXTO }}</div>
+</div></footer>
+
+<script src="{{ url_for('static', filename='js/carrito.js') }}"></script>
+{% block scripts %}{% endblock %}
+</body>
+</html>

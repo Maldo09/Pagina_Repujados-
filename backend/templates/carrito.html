@@ -1,0 +1,40 @@
+{% extends "tienda_base.html" %}
+{% block titulo %}Tu carrito{% endblock %}
+{% block contenido %}
+<div id="carritoApp" class="carrito">
+  <div class="carrito-items">
+    <h1>Tu carrito</h1>
+    <div id="lista"></div>
+    <div class="carrito-vacio">
+      <p>Tu carrito está vacío.</p>
+      <a class="btn btn-blue" href="{{ url_for('inicio') }}#catalogo">Ver catálogo</a>
+    </div>
+  </div>
+
+  <form class="carrito-resumen" id="formPedido" method="post" action="{{ url_for('crear_pedido') }}">
+    <h2>Datos de envío</h2>
+    <input type="hidden" name="carrito" id="carritoCampo">
+    <div class="form form-1col">
+      <div><label for="nombre">Nombre completo *</label><input id="nombre" name="nombre" required maxlength="120" autocomplete="name"></div>
+      <div><label for="telefono">Celular *</label><input id="telefono" name="telefono" type="tel" required maxlength="30" autocomplete="tel"></div>
+      <div><label for="email">Correo</label><input id="email" name="email" type="email" maxlength="120" autocomplete="email"></div>
+      <div><label for="direccion">Dirección *</label><input id="direccion" name="direccion" required maxlength="200" autocomplete="street-address"></div>
+      <div><label for="ciudad">Ciudad *</label><input id="ciudad" name="ciudad" required maxlength="80" autocomplete="address-level2"></div>
+      <div><label for="notas">Notas del pedido</label><textarea id="notas" name="notas" placeholder="Barrio, horario de entrega, acabado…"></textarea></div>
+    </div>
+
+    <div class="total-fila"><span>Total productos</span><strong id="total">$0</strong></div>
+    <p class="nota">El valor del envío se confirma por WhatsApp según tu ciudad.</p>
+
+    <button class="btn btn-primary btn-pagar" id="pago" type="submit" disabled>
+      {% if PAGO_EN_LINEA %}Pagar en línea{% else %}Hacer pedido{% endif %}
+    </button>
+    {% if PAGO_EN_LINEA %}
+    <p class="nota">Serás llevado a Wompi (Bancolombia) para pagar con tarjeta, PSE, Nequi o Bancolombia.</p>
+    {% else %}
+    <p class="nota">Después de hacer el pedido verás los datos para pagar por transferencia.</p>
+    {% endif %}
+  </form>
+</div>
+<script type="application/json" id="precios">{{ precios|tojson }}</script>
+{% endblock %}
