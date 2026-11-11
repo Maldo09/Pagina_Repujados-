@@ -16,7 +16,7 @@ from urllib.parse import quote
 from flask import (Flask, Response, abort, flash, redirect, render_template,
                    request, session, url_for)
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import inspect, text
+from sqlalchemy import create_engine, inspect, select, text
 from werkzeug.middleware.proxy_fix import ProxyFix
 
 import pagos
@@ -43,18 +43,29 @@ app = Flask(__name__)
 app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)  # Render usa https por delante
 app.config["SECRET_KEY"] = os.getenv("SECRET_KEY", "cambia-esta-clave")
 
-# URL de PostgreSQL:  postgresql+psycopg://usuario:clave@host:puerto/base
-db_url = os.getenv("DATABASE_URL")
+def url_psycopg(url):
+    """Ajusta 'postgres://...' o 'postgresql://...' al formato que usa SQLAlchemy."""
+    if url.startswith("postgres://"):
+        return url.replace("postgres://", "postgresql+psycopg://", 1)
+    if url.startswith("postgresql://"):
+        return url.replace("postgresql://", "postgresql+psycopg://", 1)
+    return url
+
+
+# Base de datos principal:
+#   BASE_DATOS_URL -> PostgreSQL en Neon (gratis y sin vencimiento)
+#   DATABASE_URL   -> PostgreSQL de Render (la vieja; solo se usa para copiar los datos)
+url_neon = os.getenv("BASE_DATOS_URL", "").strip()
+url_vieja = os.getenv("DATABASE_URL", "").strip()
+db_url = url_neon or url_vieja
 if not db_url:
     # Respaldo para que la página funcione aunque PostgreSQL no esté listo.
     db_url = "sqlite:///" + os.path.join(BASE_DIR, "repujados.db")
-    print("⚠  No hay DATABASE_URL en .env: usando SQLite temporal (repujados.db)")
-elif db_url.startswith("postgres://"):
-    db_url = db_url.replace("postgres://", "postgresql+psycopg://", 1)
-elif db_url.startswith("postgresql://"):
-    db_url = db_url.replace("postgresql://", "postgresql+psycopg://", 1)
+    print("⚠  No hay base de datos configurada: usando SQLite temporal (repujados.db)")
 
-app.config["SQLALCHEMY_DATABASE_URI"] = db_url
+app.config["SQLALCHEMY_DATABASE_URI"] = url_psycopg(db_url)
+# Neon "se duerme" tras 5 min sin uso: esto revisa la conexión antes de usarla.
+app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {"pool_pre_ping": True, "pool_recycle": 280}
 app.config["MAX_CONTENT_LENGTH"] = 5 * 1024 * 1024  # imágenes de máx. 5 MB
 
 WHATSAPP = os.getenv("WHATSAPP", "573148594677")
@@ -485,6 +496,45 @@ def marcar_atendida(cid):
 
 
 # --------------------------------------------------------------- Arranque ---
+TABLAS_EN_ORDEN = ["productos", "cotizaciones", "ajustes", "pedidos", "pedido_items"]
+
+
+def copiar_desde_base_vieja():
+    """Copia una sola vez todos los datos de la base vieja (Render) a la nueva (Neon).
+    Solo se ejecuta si hay base nueva configurada y todavía está vacía."""
+    if not (url_neon and url_vieja) or url_neon == url_vieja:
+        return False
+    try:
+        vieja = create_engine(url_psycopg(url_vieja))
+        tablas_viejas = set(inspect(vieja).get_table_names())
+    except Exception as e:
+        print("⚠  No se pudo conectar a la base vieja para copiar:", e)
+        return False
+
+    copiadas = {}
+    with vieja.connect() as origen, db.engine.begin() as destino:
+        for nombre in TABLAS_EN_ORDEN:
+            if nombre not in tablas_viejas:
+                continue
+            tabla = db.metadata.tables[nombre]
+            columnas_viejas = {c["name"] for c in inspect(vieja).get_columns(nombre)}
+            columnas = [c for c in tabla.columns if c.name in columnas_viejas]
+            filas = [dict(f._mapping) for f in origen.execute(select(*[tabla.c[c.name] for c in columnas]))]
+            if filas:
+                destino.execute(tabla.insert(), filas)
+            copiadas[nombre] = len(filas)
+        # Ajusta los contadores de id para que los registros nuevos no choquen.
+        if destino.dialect.name == "postgresql":
+            for nombre in TABLAS_EN_ORDEN:
+                if "id" in db.metadata.tables[nombre].c:
+                    destino.execute(text(
+                        f"SELECT setval(pg_get_serial_sequence('{nombre}', 'id'), "
+                        f"COALESCE((SELECT MAX(id) FROM {nombre}), 0) + 1, false)"))
+    vieja.dispose()
+    print("✓ Datos copiados desde la base vieja:", copiadas)
+    return True
+
+
 def iniciar_bd():
     """Crea las tablas y, si están vacías, carga el catálogo inicial."""
     from seed import PRODUCTOS_INICIALES
@@ -496,6 +546,8 @@ def iniciar_bd():
             with db.engine.begin() as con:
                 con.execute(text("ALTER TABLE productos ADD COLUMN precio INTEGER"))
             print("✓ Columna 'precio' agregada a productos")
+        if Producto.query.count() == 0 and copiar_desde_base_vieja():
+            return
         if Producto.query.count() == 0:
             for i, datos in enumerate(PRODUCTOS_INICIALES):
                 db.session.add(Producto(orden=i, **datos))

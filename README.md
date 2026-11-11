@@ -135,7 +135,21 @@ base de datos PostgreSQL y variables.
 
 Cada `git push` a GitHub vuelve a publicar la página sola.
 
-**Límites del plan gratis:** la página se "duerme" tras 15 minutos sin
-visitas (la siguiente visita tarda cerca de un minuto en cargar) y la base
-de datos gratuita vence a los 30 días. Para dejarla en producción con la
-cliente, pasa la base de datos y el servicio a un plan pago desde Render.
+### Base de datos gratis y sin vencimiento: Neon
+
+La base PostgreSQL gratis de Render vence a los 30 días, por eso la página usa
+**Neon** (neon.tech), que es PostgreSQL gratis sin vencimiento (1 GB).
+
+1. En Neon crea un proyecto (región **AWS US West 2 / Oregon**, la misma de Render)
+   y copia su *connection string* (`postgresql://...neon.tech/neondb?sslmode=require`).
+2. En Render → servicio `repujados-bahamon` → **Environment** agrega la variable
+   `BASE_DATOS_URL` con esa dirección y guarda.
+3. Al arrancar, si la base de Neon está vacía, la página **copia sola** todos los
+   datos desde la base vieja de Render (`DATABASE_URL`): productos, fotos, precios,
+   datos de pago, cotizaciones y pedidos. Después usa solo Neon.
+
+### Que no se duerma: UptimeRobot
+
+En uptimerobot.com (gratis) crea un monitor **HTTP(s)** a
+`https://TU-LINK.onrender.com/salud` cada **5 minutos**. Las 750 horas gratis al
+mes de Render alcanzan para tener esta página encendida todo el mes.
